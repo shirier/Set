@@ -11,6 +11,11 @@ import bguspl.set.Env;
 public class Player implements Runnable {
 
     /**
+     * The dealer object.
+     */
+    private final Dealer dealer;
+
+    /**
      * The game environment object.
      */
     private final Env env;
@@ -61,6 +66,7 @@ public class Player implements Runnable {
      */
     public Player(Env env, Dealer dealer, Table table, int id, boolean human) {
         this.env = env;
+        this.dealer = dealer;
         this.table = table;
         this.id = id;
         this.human = human;
@@ -75,7 +81,8 @@ public class Player implements Runnable {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
         if (!human) createArtificialIntelligence();
 
-        while (!terminate) {
+        while (!terminate) 
+        {
             // TODO implement main player loop
         }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
