@@ -153,10 +153,16 @@ public class Table {
             Thread.sleep(env.config.tableDelayMillis);
         } 
         catch (InterruptedException ignored) {}
-        
-        env.ui.removeToken(player, slot);
-        playerTokens[player][slot] = false;
-        return true;
+        if(playerTokens[player][slot] == true)
+        {
+            env.ui.removeToken(player, slot);
+            playerTokens[player][slot] = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

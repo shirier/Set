@@ -82,6 +82,7 @@ public class Player implements Runnable {
         this.table = table;
         this.id = id;
         this.human = human;
+        terminate=false;
     }
 
     /**
@@ -95,11 +96,22 @@ public class Player implements Runnable {
 
         while (!terminate) 
         {
+            //while("size precces setsize in dealer is up when i putted token" || || keyPresses.size()==0)
+                //Thread.currentThread().wait();
+            while(keyPresses.size() == 0)
+            {
+                try 
+                {
+                    Thread.currentThread().wait();
+                } 
+                catch (InterruptedException ignored) {}
+            }
             if(keyPresses.size() > 0)
             {
                 int slot = keyPresses.poll();
-                if (slot >= 0 && slot < table.countCards() && table.) 
+                if (slot >= 0 && slot < table.countCards() && !(table.removeToken(this.id, slot)) ) 
                 {
+                    table.placeToken(this.id, slot);
                 }
             }
         }
@@ -130,6 +142,7 @@ public class Player implements Runnable {
      * Called when the game should be terminated.
      */
     public void terminate() {
+        terminate=true;
         // TODO implement
     }
 
@@ -141,6 +154,7 @@ public class Player implements Runnable {
     public void keyPressed(int slot) 
     {
         keyPresses.add(slot);
+       // Thread.currentThread().notify();
     }
 
     /**
