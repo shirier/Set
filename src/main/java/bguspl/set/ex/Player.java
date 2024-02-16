@@ -1,5 +1,7 @@
 package bguspl.set.ex;
 
+import java.util.Queue;
+
 import bguspl.set.Env;
 
 /**
@@ -55,6 +57,16 @@ public class Player implements Runnable {
      */
     private int score;
 
+    /** 
+     * 
+     * @param env
+     * @param dealer
+     * @param table
+     * @param id
+     * @param human
+     */
+    private Queue<Integer> keyPresses;
+
     /**
      * The class constructor.
      *
@@ -83,7 +95,13 @@ public class Player implements Runnable {
 
         while (!terminate) 
         {
-            // TODO implement main player loop
+            if(keyPresses.size() > 0)
+            {
+                int slot = keyPresses.poll();
+                if (slot >= 0 && slot < table.countCards() && table.) 
+                {
+                }
+            }
         }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
@@ -120,8 +138,9 @@ public class Player implements Runnable {
      *
      * @param slot - the slot corresponding to the key pressed.
      */
-    public void keyPressed(int slot) {
-        // TODO implement
+    public void keyPressed(int slot) 
+    {
+        keyPresses.add(slot);
     }
 
     /**
