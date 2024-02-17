@@ -4,6 +4,7 @@ import bguspl.set.Env;
 import bguspl.set.ThreadLogger;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,11 +39,14 @@ public class Dealer implements Runnable {
      */
     private long reshuffleTime = Long.MAX_VALUE;
 
+    private Queue<Player> playersToCheck;
+
     public Dealer(Env env, Table table, Player[] players) {
         this.env = env;
         this.table = table;
         this.players = players;
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
+        terminate=false; //here i changed
     }
 
     /**
@@ -85,6 +89,14 @@ public class Dealer implements Runnable {
      */
     public void terminate() {
         // TODO implement
+        if(deck.size()==0 || table.countCards()==0)
+        {
+            for(Player player:players)
+            {
+                player.terminate();
+            }
+            terminate=true;
+        }
     }
 
     /**
@@ -106,35 +118,40 @@ public class Dealer implements Runnable {
     /**
      * Check if any cards can be removed from the deck and placed on the table.
      */
-    private void placeCardsOnTable() {
+    private void placeCardsOnTable() 
+    {
         // TODO implement
     }
 
     /**
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
-    private void sleepUntilWokenOrTimeout() {
+    private void sleepUntilWokenOrTimeout() 
+    {
         // TODO implement
     }
 
     /**
      * Reset and/or update the countdown and the countdown display.
      */
-    private void updateTimerDisplay(boolean reset) {
+    private void updateTimerDisplay(boolean reset) 
+    {
         // TODO implement
     }
 
     /**
      * Returns all the cards from the table to the deck.
      */
-    private void removeAllCardsFromTable() {
+    private void removeAllCardsFromTable() 
+    {
         // TODO implement
     }
 
     /**
      * Check who is/are the winner/s and displays them.
      */
-    private void announceWinners() {
+    private void announceWinners() 
+    {
         // TODO implement
     }
 }

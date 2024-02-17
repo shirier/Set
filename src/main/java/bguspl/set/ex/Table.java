@@ -140,6 +140,19 @@ public class Table {
         this.playerTokens[player][slot] = true;
     }
 
+    public synchronized int getPlayerTokenCount(int player) 
+    {
+        int count = 0;
+        for (int i = 0; i < env.config.tableSize; i++) 
+        {
+            if (playerTokens[player][i] == true) 
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    
     /**
      * Removes a token of a player from a grid slot.
      * @param player - the player the token belongs to.
@@ -153,10 +166,16 @@ public class Table {
             Thread.sleep(env.config.tableDelayMillis);
         } 
         catch (InterruptedException ignored) {}
-        
-        env.ui.removeToken(player, slot);
-        playerTokens[player][slot] = false;
-        return true;
+        if(playerTokens[player][slot] == true)
+        {
+            env.ui.removeToken(player, slot);
+            playerTokens[player][slot] = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }
