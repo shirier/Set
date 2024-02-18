@@ -17,6 +17,7 @@ public class Player implements Runnable {
      */
     private final Dealer dealer;
 
+
     /**
      * The game environment object.
      */
@@ -66,6 +67,9 @@ public class Player implements Runnable {
      * @param human
      */
     private Queue<Integer> keyPresses;
+    private int counter=0;
+    final private Object LockQueue = new Object();
+
 
     /**
      * The class constructor.
@@ -88,6 +92,9 @@ public class Player implements Runnable {
     /**
      * The main player thread of each player starts here (main loop for the player thread).
      */
+
+                 //while("size precces setsize in dealer is up when i putted token" || || keyPresses.size()==0)
+                //Thread.currentThread().wait();
     @Override
     public void run() {
         playerThread = Thread.currentThread();
@@ -95,23 +102,37 @@ public class Player implements Runnable {
         if (!human) createArtificialIntelligence();
 
         while (!terminate) 
-        {
-            //while("size precces setsize in dealer is up when i putted token" || || keyPresses.size()==0)
-                //Thread.currentThread().wait();
-            while(keyPresses.size() == 0)
-            {
-                try 
+        {   
+            synchronized (keyPresses) {
+                while(keyPresses.size() == 0)
                 {
-                    Thread.currentThread().wait();
-                } 
-                catch (InterruptedException ignored) {}
-            }
-            if(keyPresses.size() > 0)
-            {
-                int slot = keyPresses.poll();
-                if (slot >= 0 && slot < table.countCards() && !(table.removeToken(this.id, slot)) ) 
+                    try 
+                    {
+                        Thread.currentThread().wait();
+                    } 
+                    catch (InterruptedException ignored) {}
+                }
+                if(keyPresses.size() > 0)
                 {
-                    table.placeToken(this.id, slot);
+                    int slot = keyPresses.poll();
+                    if (slot >= 0 && slot < table.countCards()  ) 
+                    {
+                        if(!(table.removeToken(this.id, slot)))
+                        {
+                            table.placeToken(this.id, slot);
+                            counter++;
+                            if(counter==3)
+                            {
+                                env.logger.info("Player " + id + " has placed 3 tokens");
+                                checkrightSet();
+                            }
+                        }
+                        else
+                        {
+                            counter--;
+                        }
+
+                    }
                 }
             }
         }
@@ -151,10 +172,12 @@ public class Player implements Runnable {
      *
      * @param slot - the slot corresponding to the key pressed.
      */
-    public void keyPressed(int slot) 
+    public synchronized void keyPressed(int slot) 
     {
         keyPresses.add(slot);
-       // Thread.currentThread().notify();
+        synchronized (keyPresses) {
+            Thread.currentThread().notify();
+        }
     }
 
     /**
@@ -179,5 +202,14 @@ public class Player implements Runnable {
 
     public int score() {
         return score;
+    }
+
+    public void checkrightSet()
+    {
+        synchronized (dealer) {
+            dealer.processPlayerSet(id);
+            dealer.notifyAll();
+
+        }
     }
 }

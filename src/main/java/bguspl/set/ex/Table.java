@@ -165,4 +165,19 @@ public class Table {
         }
     }
 
+
+    public int[] getCardsPlayer(int id)
+    {
+        int i=0;
+        int[] array=new int[3];
+        for (int j=0;j<playerTokens[id].length;j++)
+        {
+            if (playerTokens[id][j])
+            {
+                array[i]=j;
+                i++;
+            }
+        }    
+        return array;
+    }
 }

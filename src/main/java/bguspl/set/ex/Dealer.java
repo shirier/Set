@@ -146,4 +146,26 @@
         private void announceWinners() {
             // TODO implement
         }
+
+
+        public void processPlayerSet(int id)
+        {
+            int[] cards=table.getCardsPlayer(id);
+            if(env.util.testSet(cards))
+            {
+                table.removeToken(id, cards[0]);
+                table.removeCard(cards[0]);
+                table.removeToken(id, cards[1]);
+                table.removeCard(cards[1]);
+                table.removeToken(id, cards[2]);
+                table.removeCard(cards[2]);
+                updateTimerDisplay(true);
+                players[id].point();;
+            }
+            else
+            {
+                players[id].penalty();
+            }
+            players[id].notifyAll();
+        }
     }
