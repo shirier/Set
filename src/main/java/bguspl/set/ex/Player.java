@@ -1,6 +1,6 @@
 package bguspl.set.ex;
 
-import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import bguspl.set.Env;
 
@@ -66,9 +66,10 @@ public class Player implements Runnable {
      * @param id
      * @param human
      */
-    private Queue<Integer> keyPresses;
-    private int counter=0;
-    final private Object LockQueue = new Object();
+    private ArrayBlockingQueue<Integer> keyPresses;
+    //private int counter=0;
+    private boolean frosen = false;
+    //final private Object LockQueue = new Object();
 
 
     /**
@@ -103,38 +104,18 @@ public class Player implements Runnable {
 
         while (!terminate) 
         {   
-            synchronized (keyPresses) {
-                while(keyPresses.size() == 0)
+            if(frosen)
+            {
+                synchronized (this) 
                 {
                     try 
                     {
-                        Thread.currentThread().wait();
+                        wait();
                     } 
                     catch (InterruptedException ignored) {}
                 }
-                if(keyPresses.size() > 0)
-                {
-                    int slot = keyPresses.poll();
-                    if (slot >= 0 && slot < table.countCards()  ) 
-                    {
-                        if(!(table.removeToken(this.id, slot)))
-                        {
-                            table.placeToken(this.id, slot);
-                            counter++;
-                            if(counter==3)
-                            {
-                                env.logger.info("Player " + id + " has placed 3 tokens");
-                                checkrightSet();
-                            }
-                        }
-                        else
-                        {
-                            counter--;
-                        }
-
-                    }
-                }
             }
+            act();            
         }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
@@ -148,7 +129,8 @@ public class Player implements Runnable {
         // note: this is a very, very smart AI (!)
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
-            while (!terminate) {
+            while (!terminate) 
+            {
                 // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
@@ -174,10 +156,23 @@ public class Player implements Runnable {
      */
     public synchronized void keyPressed(int slot) 
     {
-        keyPresses.add(slot);
-        synchronized (keyPresses) {
-            Thread.currentThread().notify();
+        try 
+        {
+            if(!table.removeToken(this.id, slot))
+            {
+                keyPresses.put(slot);    
+            }
+            /*synchronized (keyPresses) 
+            {
+                Thread.currentThread().notify();
+            }*/
+        } 
+        catch (InterruptedException e) 
+        {
+            // Handle the InterruptedException
+            e.printStackTrace();
         }
+        
     }
 
     /**
@@ -189,27 +184,97 @@ public class Player implements Runnable {
     public void point() {
         // TODO implement
 
-        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+    //    int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         env.ui.setScore(id, ++score);
-    }
+        synchronized(this)
+        { try
+            {
+                playerThread.sleep(env.config.pointFreezeMillis);
+            }
+            catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+}
 
     /**
      * Penalize a player and perform other related actions.
      */
-    public void penalty() {
+    public void penalty() 
+    {
         // TODO implement
+        try
+        {
+            synchronized(this)
+            {
+                frosen = true;
+                for(int i=3; i>0; i--)
+                {
+                    env.ui.setFreeze(id, env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
+                    playerThread.sleep(env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
+                }
+                env.ui.setFreeze(id, 0);
+                frosen = false;
+            }
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public int score() {
         return score;
     }
 
-    public void checkrightSet()
+    public void checkrightSet(int[] chosen )
     {
-        synchronized (dealer) {
+        ////call the dealer
+
+        /*synchronized (dealer) {
             dealer.processPlayerSet(id);
             dealer.notifyAll();
 
+        }*/
+    }
+    private void act()
+    {
+        synchronized (keyPresses) {
+            /*while(keyPresses.isEmpty())
+            {
+                try 
+                {
+                    Thread.currentThread().wait();
+                } 
+                catch (InterruptedException ignored) {}
+            }*/
+            if(keyPresses.size() > 0)
+            {
+                try
+                {
+                    int slot = keyPresses.take();
+                    if (slot >= 0 && slot < table.countCards()) 
+                    {
+                        if(!(table.removeToken(this.id, slot)))
+                        {
+                            table.placeToken(this.id, slot);
+                            if(keyPresses.size()==3)
+                            {
+                                frosen = true;
+                                dealer.checkWhenNotified(this.id);
+                                wait();
+                                frosen = false;
+                            }
+                        }
+                    }
+                }
+                catch(InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+
 }
