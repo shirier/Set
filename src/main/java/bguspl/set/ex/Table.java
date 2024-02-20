@@ -29,7 +29,7 @@ public class Table {
      */
     protected final Integer[] cardToSlot; // slot per card (if any)
 
-    volatile private boolean[][] playerTokens; // array that hodls if a player has a token on a slot.
+    volatile public boolean[][] playerTokens; // array that hodls if a player has a token on a slot.
 
     /**
      * Constructor for testing.
@@ -116,6 +116,11 @@ public class Table {
         catch (InterruptedException ignored) {}
 
         // TODO implement
+        
+        for(int i = 0; i < env.config.players; i++)
+        {
+            removeToken(i, slot);
+        }
         env.ui.removeCard(slot);
         cardToSlot[slotToCard[slot]] = null;
         slotToCard[slot] = null;
@@ -130,12 +135,12 @@ public class Table {
      */
     public synchronized void placeToken(int player, int slot) 
     {
-        try 
+        /*try 
         {
             Thread.sleep(env.config.tableDelayMillis);
         }
         catch (InterruptedException ignored) {}
-
+*/
         env.ui.placeToken(player, slot);
         this.playerTokens[player][slot] = true;
     }
@@ -148,11 +153,13 @@ public class Table {
      */
     public synchronized boolean removeToken(int player, int slot) 
     {
+        /*
         try 
         {
             Thread.sleep(env.config.tableDelayMillis);
         } 
         catch (InterruptedException ignored) {}
+        */
         if(playerTokens[player][slot] == true)
         {
             env.ui.removeToken(player, slot);
@@ -180,4 +187,16 @@ public class Table {
         }    
         return array;
     }
+
+    public void removeCardsOfPlayer(int id)
+    {
+        for (int i=0;i<slotToCard.length;i++)
+        {
+            if (playerTokens[id][i])
+            {
+                removeCard(i);
+            }
+        }
+    }
+
 }
