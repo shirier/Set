@@ -1,0 +1,37 @@
+[22:49:42.999] [INFO   ] thread main starting.
+[22:49:43.018] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[22:49:43.028] [SEVERE ] configuration file was loaded from resources directory.
+[22:49:44.376] [INFO   ] thread dealer starting.
+[22:49:44.377] [INFO   ] thread dealer starting.
+[22:49:44.378] [INFO   ] thread player 0 starting.
+[22:49:44.380] [INFO   ] thread player 1 starting.
+[22:49:44.380] [INFO   ] thread player 0 starting.
+[22:49:44.381] [INFO   ] thread player 1 starting.
+[22:49:44.488] [SEVERE ] placing card 0 in slot 2
+[22:49:44.591] [SEVERE ] placing card 27 in slot 3
+[22:49:44.693] [SEVERE ] placing card 46 in slot 1
+[22:49:44.796] [SEVERE ] placing card 23 in slot 4
+[22:49:44.899] [SEVERE ] placing card 15 in slot 7
+[22:49:45.002] [SEVERE ] placing card 72 in slot 6
+[22:49:45.104] [SEVERE ] placing card 11 in slot 11
+[22:49:45.206] [SEVERE ] placing card 22 in slot 10
+[22:49:45.308] [SEVERE ] placing card 77 in slot 9
+[22:49:45.410] [SEVERE ] placing card 53 in slot 0
+[22:49:45.512] [SEVERE ] placing card 1 in slot 5
+[22:49:45.614] [SEVERE ] placing card 64 in slot 8
+[22:49:45.616] [SEVERE ] updating countdown to 60000
+[22:49:46.246] [SEVERE ] key 81 was pressed by player 1
+[22:49:46.247] [SEVERE ] player 1 placing token on slot 0
+[22:49:46.618] [SEVERE ] updating countdown to 59000
+[22:49:46.721] [SEVERE ] key 87 was pressed by player 1
+[22:49:46.730] [SEVERE ] player 1 placing token on slot 1
+[22:49:47.134] [SEVERE ] key 69 was pressed by player 1
+[22:49:47.135] [SEVERE ] player 1 placing token on slot 2
+[22:49:47.136] [SEVERE ] updating countdown to 58482
+[22:49:48.137] [SEVERE ] updating countdown to 57481
+[22:49:49.139] [SEVERE ] updating countdown to 56479
+[22:49:50.141] [SEVERE ] updating countdown to 55477
+[22:49:51.142] [SEVERE ] updating countdown to 54476
+[22:49:52.144] [SEVERE ] updating countdown to 53474
+[22:49:53.146] [SEVERE ] updating countdown to 52472
+[22:49:54.147] [SEVERE ] updating countdown to 51471

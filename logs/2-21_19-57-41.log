@@ -1,0 +1,37 @@
+[19:57:41.632] [INFO   ] thread main starting.
+[19:57:41.661] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[19:57:41.678] [SEVERE ] configuration file was loaded from resources directory.
+[19:57:43.948] [INFO   ] thread dealer starting.
+[19:57:43.949] [INFO   ] thread dealer starting.
+[19:57:43.950] [INFO   ] thread player 0 starting.
+[19:57:43.951] [INFO   ] thread player 1 starting.
+[19:57:43.951] [INFO   ] thread player 0 starting.
+[19:57:43.953] [INFO   ] thread player 1 starting.
+[19:57:44.064] [SEVERE ] placing card 61 in slot 9
+[19:57:44.166] [SEVERE ] placing card 66 in slot 3
+[19:57:44.268] [SEVERE ] placing card 38 in slot 2
+[19:57:44.369] [SEVERE ] placing card 3 in slot 4
+[19:57:44.471] [SEVERE ] placing card 12 in slot 6
+[19:57:44.578] [SEVERE ] placing card 52 in slot 10
+[19:57:44.679] [SEVERE ] placing card 64 in slot 8
+[19:57:44.781] [SEVERE ] placing card 27 in slot 5
+[19:57:44.883] [SEVERE ] placing card 55 in slot 0
+[19:57:44.985] [SEVERE ] placing card 28 in slot 11
+[19:57:45.087] [SEVERE ] placing card 17 in slot 1
+[19:57:45.189] [SEVERE ] placing card 71 in slot 7
+[19:57:45.190] [SEVERE ] updating countdown to 60000
+[19:57:46.194] [SEVERE ] updating countdown to 59000
+[19:57:47.196] [SEVERE ] updating countdown to 57997
+[19:57:48.204] [SEVERE ] updating countdown to 56989
+[19:57:49.207] [SEVERE ] updating countdown to 55986
+[19:57:49.794] [SEVERE ] key 81 was pressed by player 1
+[19:57:50.209] [SEVERE ] updating countdown to 54984
+[19:57:51.211] [SEVERE ] updating countdown to 53982
+[19:57:51.373] [SEVERE ] key 81 was pressed by player 1
+[19:57:51.569] [SEVERE ] key 87 was pressed by player 1
+[19:57:52.126] [SEVERE ] key 69 was pressed by player 1
+[19:57:52.213] [SEVERE ] updating countdown to 52980
+[19:57:53.216] [SEVERE ] updating countdown to 51977
+[19:57:54.218] [SEVERE ] updating countdown to 50975
+[19:57:55.221] [SEVERE ] updating countdown to 49972
+[19:57:56.223] [SEVERE ] updating countdown to 48971

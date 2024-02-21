@@ -1,0 +1,77 @@
+[22:34:46.950] [INFO   ] thread main starting.
+[22:34:46.969] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[22:34:46.978] [SEVERE ] configuration file was loaded from resources directory.
+[22:34:48.484] [INFO   ] thread dealer starting.
+[22:34:48.485] [INFO   ] thread dealer starting.
+[22:34:48.486] [INFO   ] thread player 0 starting.
+[22:34:48.486] [INFO   ] thread player 1 starting.
+[22:34:48.487] [INFO   ] thread player 0 starting.
+[22:34:48.487] [INFO   ] thread player 1 starting.
+[22:34:48.596] [SEVERE ] placing card 60 in slot 5
+[22:34:48.698] [SEVERE ] placing card 23 in slot 0
+[22:34:48.800] [SEVERE ] placing card 29 in slot 8
+[22:34:48.904] [SEVERE ] placing card 45 in slot 7
+[22:34:49.008] [SEVERE ] placing card 39 in slot 2
+[22:34:49.110] [SEVERE ] placing card 16 in slot 9
+[22:34:49.213] [SEVERE ] placing card 72 in slot 1
+[22:34:49.317] [SEVERE ] placing card 22 in slot 6
+[22:34:49.420] [SEVERE ] placing card 20 in slot 10
+[22:34:49.522] [SEVERE ] placing card 1 in slot 4
+[22:34:49.624] [SEVERE ] placing card 66 in slot 3
+[22:34:49.726] [SEVERE ] placing card 30 in slot 11
+[22:34:49.728] [SEVERE ] updating countdown to 60000
+[22:34:50.731] [SEVERE ] updating countdown to 58999
+[22:34:51.733] [SEVERE ] updating countdown to 57997
+[22:34:52.736] [SEVERE ] updating countdown to 56994
+[22:34:53.739] [SEVERE ] updating countdown to 55991
+[22:34:54.745] [SEVERE ] updating countdown to 54985
+[22:34:55.749] [SEVERE ] updating countdown to 53981
+[22:34:56.753] [SEVERE ] updating countdown to 52977
+[22:34:57.765] [SEVERE ] updating countdown to 51965
+[22:34:58.767] [SEVERE ] updating countdown to 50963
+[22:34:59.769] [SEVERE ] updating countdown to 49961
+[22:35:00.782] [SEVERE ] updating countdown to 48948
+[22:35:01.791] [SEVERE ] updating countdown to 47939
+[22:35:02.796] [SEVERE ] updating countdown to 46934
+[22:35:03.798] [SEVERE ] updating countdown to 45932
+[22:35:04.801] [SEVERE ] updating countdown to 44929
+[22:35:05.806] [SEVERE ] updating countdown to 43924
+[22:35:06.812] [SEVERE ] updating countdown to 42918
+[22:35:07.817] [SEVERE ] updating countdown to 41913
+[22:35:08.823] [SEVERE ] updating countdown to 40907
+[22:35:09.835] [SEVERE ] updating countdown to 39895
+[22:35:10.841] [SEVERE ] updating countdown to 38889
+[22:35:11.845] [SEVERE ] updating countdown to 37885
+[22:35:12.868] [SEVERE ] updating countdown to 36862
+[22:35:12.907] [SEVERE ] key 81 was pressed by player 1
+[22:35:12.909] [SEVERE ] player 1 placing token on slot 0
+[22:35:13.120] [SEVERE ] key 87 was pressed by player 1
+[22:35:13.121] [SEVERE ] player 1 placing token on slot 1
+[22:35:13.376] [SEVERE ] key 69 was pressed by player 1
+[22:35:13.377] [SEVERE ] player 1 placing token on slot 2
+[22:35:13.871] [SEVERE ] updating countdown to 35859
+[22:35:14.875] [SEVERE ] updating countdown to 34855
+[22:35:15.877] [SEVERE ] updating countdown to 33853
+[22:35:16.901] [SEVERE ] updating countdown to 32829
+[22:35:17.903] [SEVERE ] updating countdown to 31827
+[22:35:18.908] [SEVERE ] updating countdown to 30822
+[22:35:19.922] [SEVERE ] updating countdown to 29808
+[22:35:20.931] [SEVERE ] updating countdown to 28799
+[22:35:21.935] [SEVERE ] updating countdown to 27795
+[22:35:22.938] [SEVERE ] updating countdown to 26792
+[22:35:23.944] [SEVERE ] updating countdown to 25786
+[22:35:24.946] [SEVERE ] updating countdown to 24784
+[22:35:25.961] [SEVERE ] updating countdown to 23769
+[22:35:26.964] [SEVERE ] updating countdown to 22766
+[22:35:27.966] [SEVERE ] updating countdown to 21764
+[22:35:28.972] [SEVERE ] updating countdown to 20758
+[22:35:29.983] [SEVERE ] updating countdown to 19747
+[22:35:30.988] [SEVERE ] updating countdown to 18742
+[22:35:31.991] [SEVERE ] updating countdown to 17739
+[22:35:32.999] [SEVERE ] updating countdown to 16731
+[22:35:34.002] [SEVERE ] updating countdown to 15728
+[22:35:35.006] [SEVERE ] updating countdown to 14724
+[22:35:36.007] [SEVERE ] updating countdown to 13723
+[22:35:37.009] [SEVERE ] updating countdown to 12721
+[22:35:38.013] [SEVERE ] updating countdown to 11717
+[22:35:39.016] [SEVERE ] updating countdown to 10714

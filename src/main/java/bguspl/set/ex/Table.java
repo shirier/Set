@@ -199,4 +199,20 @@ public class Table {
         }
     }
 
+    public boolean CheckExistPlayerSet(int id )
+    {
+        int counter=0;
+        for(int i=0;i<env.config.tableSize;i++)
+        {
+            if(playerTokens[id][i])
+            {
+                counter++;
+            }
+        }
+        if(counter == 3)
+        {
+            return true;
+        }
+        return false;
+    }
 }

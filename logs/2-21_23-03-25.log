@@ -1,0 +1,38 @@
+[23:03:25.157] [INFO   ] thread main starting.
+[23:03:25.175] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[23:03:25.184] [SEVERE ] configuration file was loaded from resources directory.
+[23:03:26.527] [INFO   ] thread dealer starting.
+[23:03:26.528] [INFO   ] thread dealer starting.
+[23:03:26.529] [INFO   ] thread player 0 starting.
+[23:03:26.530] [INFO   ] thread player 1 starting.
+[23:03:26.530] [INFO   ] thread player 0 starting.
+[23:03:26.531] [INFO   ] thread player 1 starting.
+[23:03:26.638] [SEVERE ] placing card 22 in slot 10
+[23:03:26.739] [SEVERE ] placing card 72 in slot 1
+[23:03:26.842] [SEVERE ] placing card 34 in slot 6
+[23:03:26.945] [SEVERE ] placing card 67 in slot 8
+[23:03:27.046] [SEVERE ] placing card 25 in slot 5
+[23:03:27.148] [SEVERE ] placing card 17 in slot 9
+[23:03:27.250] [SEVERE ] placing card 26 in slot 0
+[23:03:27.352] [SEVERE ] placing card 75 in slot 3
+[23:03:27.454] [SEVERE ] placing card 32 in slot 4
+[23:03:27.556] [SEVERE ] placing card 56 in slot 7
+[23:03:27.658] [SEVERE ] placing card 78 in slot 2
+[23:03:27.760] [SEVERE ] placing card 8 in slot 11
+[23:03:27.761] [SEVERE ] updating countdown to 60000
+[23:03:28.763] [SEVERE ] updating countdown to 59000
+[23:03:29.765] [SEVERE ] updating countdown to 57998
+[23:03:30.752] [SEVERE ] key 87 was pressed by player 1
+[23:03:30.753] [SEVERE ] player 1 placing token on slot 1
+[23:03:30.767] [SEVERE ] updating countdown to 56996
+[23:03:30.966] [SEVERE ] key 69 was pressed by player 1
+[23:03:30.967] [SEVERE ] player 1 placing token on slot 2
+[23:03:31.379] [SEVERE ] key 82 was pressed by player 1
+[23:03:31.380] [SEVERE ] player 1 placing token on slot 3
+[23:03:31.381] [SEVERE ] updating countdown to 56382
+[23:03:31.382] [SEVERE ] setting player 1 score to 1
+[23:03:31.383] [SEVERE ] setting player 1 freeze to 1000
+[23:03:31.486] [INFO   ] thread dealer terminated.
+[23:03:36.487] [SEVERE ] thanks for playing... it was fun!
+[23:03:36.489] [INFO   ] thread main terminated.
+[23:03:36.489] [SEVERE ] disposing of user interface elements

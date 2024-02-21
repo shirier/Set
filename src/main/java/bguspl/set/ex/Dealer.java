@@ -42,6 +42,7 @@ public class Dealer implements Runnable {
     private long reshuffleTime = Long.MAX_VALUE;
 
     private ArrayBlockingQueue <Integer> playersWithCardsToRemove;
+    private ArrayBlockingQueue <Integer> cardstoRemove;
 
     public Dealer(Env env, Table table, Player[] players) {
         this.env = env;
@@ -50,6 +51,7 @@ public class Dealer implements Runnable {
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
         terminate=false; //here i changed
         playersWithCardsToRemove = new ArrayBlockingQueue<>(env.config.players);
+        cardstoRemove=new ArrayBlockingQueue<>(env.config.players*3);
     }
 
     /**
@@ -67,6 +69,7 @@ public class Dealer implements Runnable {
         {
             placeCardsOnTable();
             updateTimerDisplay(true);
+            System.out.println("timerloop before");
             timerLoop();
             removeAllCardsFromTable();
         }
@@ -78,13 +81,24 @@ public class Dealer implements Runnable {
      * The inner loop of the dealer thread that runs as long as the countdown did not time out.
      */
     private void timerLoop() {
+        System.out.println("timerLoop after");
         reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
         while (!terminate && System.currentTimeMillis() < reshuffleTime) 
         {
             sleepUntilWokenOrTimeout();
             updateTimerDisplay(false);
-            removeCardsFromTable();
-            placeCardsOnTable();
+            while(!playersWithCardsToRemove.isEmpty())
+            {
+                try
+                {
+                checkWhenNotified(playersWithCardsToRemove.take());
+                System.out.println("checked");
+                }
+                catch (InterruptedException ignored) {}
+                removeCardsFromTable();
+                System.out.println("removedcards-finnish");
+                placeCardsOnTable();
+            }
         }
     }
 
@@ -118,18 +132,13 @@ public class Dealer implements Runnable {
     private void removeCardsFromTable() 
     {
         // TODO implement
-        try
-        {
-            int id = playersWithCardsToRemove.take();
-            int[] cards=table.getCardsPlayer(id);
-            table.removeCard(cards[0]);
-            table.removeCard(cards[1]);
-            table.removeCard(cards[2]);
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+            while (!cardstoRemove.isEmpty()) {
+                try
+                {
+                table.removeCard(table.cardToSlot[cardstoRemove.take()]);
+                }
+                catch (InterruptedException ignored) {}    
+            }
     }
 
     /**
@@ -154,84 +163,70 @@ public class Dealer implements Runnable {
     /**
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
-    private synchronized void sleepUntilWokenOrTimeout() 
+    private void sleepUntilWokenOrTimeout() 
     {
-        //synchronized (this) 
-        //{
+        synchronized (this) 
+        {
             try 
             {
                 // Calculate the remaining time until reshuffle
-                long timeNoWarning = reshuffleTime - System.currentTimeMillis() - env.config.turnTimeoutWarningMillis;
-                while (timeNoWarning > 0) 
-                {
+                //long timeNoWarning = reshuffleTime - System.currentTimeMillis() - env.config.turnTimeoutWarningMillis;
+                //while (timeNoWarning > 0) 
+                //{
                     wait(1000); //magic number
-                    timeNoWarning -= 1000; //magic number
-                    updateTimerDisplay(false);
-                    checkChosenSets();
-                }
+                    //timeNoWarning -= 1000; //magic number
+                    //updateTimerDisplay(false);
+
+                //}
                 
             } 
             catch (InterruptedException ignored) {}
-        //}
+        }
         // TODO implement
     }
 
-    private void checkChosenSets() 
-    {
-        for (Player player : players) 
-        {
-            int[] chosen = new int[3];
-            int counter = 0;
-            boolean ans = false;
-            for(int i = 0; i < env.config.tableSize; i++)
-            {
-                if(table.playerTokens[player.id][i] == true)
-                {
-                    chosen[counter] = table.slotToCard[i];
-                    counter++;
-                }
-            }
-            if(counter == 3) // maybe not needed
-            {
-                ans = env.util.testSet(chosen);
-                if(ans)
-                {
-                    player.point();
-                    env.ui.setScore(player.id, player.score());
-                    try{
-                    playersWithCardsToRemove.put(player.id);
-                    }
-                    catch(InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    removeCardsFromTable();
-                }
-                else
-                {
-                    player.penalty();
-                }
-                synchronized(player)
-                {
-                    player.notifyAll();
-                }
-            }
-         
-        }    
-    }
+    
+    
 
     public void checkWhenNotified(int id)
     {
-        synchronized (this) 
-        { 
-            try 
+        System.out.println("joined check");
+        int[] chosen = new int[3];
+        int counter = 0;
+        for(int i = 0; i < env.config.tableSize; i++)
+        {
+            if(table.playerTokens[id][i] == true)
             {
-                notifyAll();
-            } 
-            catch (Exception e) 
-            {
-                e.printStackTrace();
+                chosen[counter] = table.slotToCard[i];
+                counter++;
             }
+        }
+        if(counter==3)
+        {
+            boolean ans = env.util.testSet(chosen);
+            if(ans)
+            {
+                players[id].point();
+                // env.ui.setScore(players[id].id, players[id].score());
+                try{
+                    cardstoRemove.put(chosen[0]);
+                    cardstoRemove.put(chosen[1]);
+                    cardstoRemove.put(chosen[2]);
+                }
+                catch(InterruptedException e)
+                {
+                }
+            }
+            else
+            {
+                players[id].penalty();
+            } 
+        }
+        synchronized(players[id].playerLock)
+        {
+            players[id].playerLock.notifyAll();
+            System.out.println("got notify");
+            
         }
     }
 
@@ -297,5 +292,13 @@ public class Dealer implements Runnable {
             }
         }
         env.ui.announceWinner(winners);
+    }
+    public void Addplayer(int id)
+    {
+        synchronized(this){
+            playersWithCardsToRemove.add(id);
+            notify();
+            System.out.println("we have added the player "+id+" to th check queue");
+        }
     }
 }

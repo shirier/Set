@@ -68,8 +68,10 @@ public class Player implements Runnable {
      */
     private ArrayBlockingQueue<Integer> keyPresses;
     //private int counter=0;
-    private boolean frosen = false;
-    private boolean pointFreze=false;
+    private boolean frosen;
+    private boolean pointFreze;
+    protected Object lockPress;
+    protected Object playerLock;
     //final private Object LockQueue = new Object();
 
 
@@ -90,7 +92,11 @@ public class Player implements Runnable {
         this.id = id;
         this.human = human;
         terminate=false;
-        this.keyPresses = new ArrayBlockingQueue<>(env.config.players*3);
+        frosen=false;
+        pointFreze=false;
+        this.keyPresses = new ArrayBlockingQueue<>(3);
+        lockPress=new Object();
+        playerLock=new Object();
     }
 
     /**
@@ -107,43 +113,18 @@ public class Player implements Runnable {
 
         while (!terminate) 
         {   
-           /*while(keyPresses.isEmpty())
+            while(keyPresses.isEmpty())
             {
                 try 
                 {
-                    Thread.currentThread().wait();
+                    synchronized(lockPress)
+                    {
+                        lockPress.wait();
+                    }
                 } 
                 catch (InterruptedException ignored) {}
-            } */ 
-            if(frosen)
-            {
-                 try 
-                 {
-                    for(int i=3; i>0; i--)
-                    {
-                        
-                        env.ui.setFreeze(id, env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
-                        //player thread
-                        Thread.sleep(env.config.penaltyFreezeMillis);
-                    }
-                    env.ui.setFreeze(id, 0);
-                    frosen = false;
-                    } 
-                    catch (InterruptedException ignored) {}
-                
-            }
-            if(pointFreze)
-            {
-                
-                try
-                {
-                    Thread.sleep(env.config.pointFreezeMillis);
-                }
-                catch(InterruptedException e)
-                {
-                    pointFreze=false;
-                }
-            }
+            }  
+            
             act();            
         }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
@@ -163,7 +144,7 @@ public class Player implements Runnable {
             {
                 // TODO implement player key press simulator
                 try {
-                    synchronized (this) { wait(); }
+                    synchronized (playerLock) { playerLock.wait(); }
                 } catch (InterruptedException ignored) {}
             }
             env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
@@ -189,21 +170,15 @@ public class Player implements Runnable {
     {
         try 
         {
-            if(!table.removeToken(this.id, slot))
+            synchronized(lockPress)
             {
-                keyPresses.put(slot);    
+            if(!pointFreze && !frosen){
+                keyPresses.put(slot);  
+                lockPress.notifyAll();                
             }
-            /*synchronized (keyPresses) 
-            {
-                Thread.currentThread().notify();
-            }*/
-        } 
-        catch (InterruptedException e) 
-        {
-            // Handle the InterruptedException
-            e.printStackTrace();
         }
-        
+        } 
+        catch (InterruptedException e) {}
     }
 
     /**
@@ -232,33 +207,11 @@ public class Player implements Runnable {
 
     public int score() {
         return score;
-    }
-
-    public void checkrightSet(int[] chosen )
-    {
-        ////call the dealer
-
-        /*synchronized (dealer) {
-            dealer.processPlayerSet(id);
-            dealer.notifyAll();
-
-        }*/
-    }
-    
+    }    
     private void act()
     {
         
-        synchronized (keyPresses) {
-            /*while(keyPresses.isEmpty())
-            {
-                try 
-                {
-                    Thread.currentThread().wait();
-                } 
-                catch (InterruptedException ignored) {}
-            }*/
-            if(keyPresses.size() > 0)
-            {
+        synchronized (playerLock) {
                 try
                 {
                     int slot = keyPresses.take();
@@ -267,14 +220,67 @@ public class Player implements Runnable {
                         if(!(table.removeToken(this.id, slot)))
                         {
                             table.placeToken(this.id, slot);
-                            if(keyPresses.size()==3)
+                            if(table.CheckExistPlayerSet(id))
                             {
-                                frosen = true;
-                                dealer.checkWhenNotified(this.id);
+                                
+                                dealer.Addplayer(this.id);
                                 try {
-                                    wait();
+                                    System.out.println("lock");
+                                    playerLock.wait();
                                 } catch (InterruptedException e) {}
-                                frosen = false;
+
+                                if(frosen)
+                                {
+                                    try 
+                                    {
+                                        long freezTime = env.config.penaltyFreezeMillis;
+                                        env.ui.setFreeze(id, freezTime ); //replace, magic number
+                                        while(freezTime>0)
+                                        {
+
+                                            env.ui.setFreeze(id, freezTime );
+                                            //player thread
+                                            Thread.sleep(1000-env.config.penaltyFreezeMillis%1000);
+                                            freezTime=freezTime-1000;
+                                        }
+                                        env.ui.setFreeze(id, 0);
+                                        frosen = false;
+                                        } 
+                                        catch (InterruptedException ignored) {
+                                    }
+                
+                                }
+
+                                if(pointFreze)
+                                { 
+                                    try 
+                                    {
+                                        long freezTime = env.config.pointFreezeMillis;
+                                        env.ui.setFreeze(id, freezTime ); //replace, magic number
+                                        while(freezTime>0)
+                                        {
+
+                                            env.ui.setFreeze(id, freezTime );
+                                            //player thread
+                                            Thread.sleep(1000-env.config.pointFreezeMillis%1000);
+                                            freezTime=freezTime-1000;
+                                        }
+                                        env.ui.setFreeze(id, 0);
+                                        pointFreze = false;
+                                        } 
+                                        catch (InterruptedException ignored) {
+                                    }
+                                   /* 
+                                   try
+                                    {
+                                        env.ui.setFreeze(id, env.config.pointFreezeMillis);
+                                        Thread.sleep(env.config.pointFreezeMillis);
+                                    }
+                                    catch(InterruptedException e)
+                                    {
+                                    }
+                                    pointFreze=false;*/
+                                }
                             }
                         }
                     }
@@ -282,7 +288,6 @@ public class Player implements Runnable {
                 catch(InterruptedException e)
                 {
                 }
-            }
         }
     }
     

@@ -1,0 +1,37 @@
+[20:14:41.796] [INFO   ] thread main starting.
+[20:14:41.825] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[20:14:41.841] [SEVERE ] configuration file was loaded from resources directory.
+[20:14:44.093] [INFO   ] thread dealer starting.
+[20:14:44.095] [INFO   ] thread dealer starting.
+[20:14:44.096] [INFO   ] thread player 0 starting.
+[20:14:44.097] [INFO   ] thread player 1 starting.
+[20:14:44.098] [INFO   ] thread player 0 starting.
+[20:14:44.099] [INFO   ] thread player 1 starting.
+[20:14:44.209] [SEVERE ] placing card 49 in slot 6
+[20:14:44.314] [SEVERE ] placing card 27 in slot 0
+[20:14:44.423] [SEVERE ] placing card 1 in slot 2
+[20:14:44.526] [SEVERE ] placing card 46 in slot 5
+[20:14:44.627] [SEVERE ] placing card 39 in slot 1
+[20:14:44.733] [SEVERE ] placing card 25 in slot 11
+[20:14:44.840] [SEVERE ] placing card 34 in slot 10
+[20:14:44.946] [SEVERE ] placing card 58 in slot 8
+[20:14:45.051] [SEVERE ] placing card 42 in slot 9
+[20:14:45.155] [SEVERE ] placing card 52 in slot 3
+[20:14:45.257] [SEVERE ] placing card 67 in slot 4
+[20:14:45.361] [SEVERE ] placing card 77 in slot 7
+[20:14:45.362] [SEVERE ] updating countdown to 60000
+[20:14:46.441] [SEVERE ] updating countdown to 58924
+[20:14:47.515] [SEVERE ] key 81 was pressed by player 1
+[20:14:47.517] [SEVERE ] player 1 placing token on slot 0
+[20:14:47.523] [SEVERE ] updating countdown to 57842
+[20:14:47.694] [SEVERE ] key 87 was pressed by player 1
+[20:14:47.695] [SEVERE ] player 1 placing token on slot 1
+[20:14:48.029] [SEVERE ] key 69 was pressed by player 1
+[20:14:48.031] [SEVERE ] player 1 placing token on slot 2
+[20:14:48.526] [SEVERE ] updating countdown to 56839
+[20:14:49.528] [SEVERE ] updating countdown to 55837
+[20:14:49.731] [SEVERE ] key 69 was pressed by player 1
+[20:14:49.995] [SEVERE ] key 81 was pressed by player 1
+[20:14:50.010] [SEVERE ] key 87 was pressed by player 1
+[20:14:50.530] [SEVERE ] updating countdown to 54835
+[20:14:51.593] [SEVERE ] updating countdown to 53772

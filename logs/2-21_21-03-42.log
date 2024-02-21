@@ -1,0 +1,40 @@
+[21:03:42.319] [INFO   ] thread main starting.
+[21:03:42.353] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[21:03:42.372] [SEVERE ] configuration file was loaded from resources directory.
+[21:03:44.374] [INFO   ] thread dealer starting.
+[21:03:44.375] [INFO   ] thread dealer starting.
+[21:03:44.376] [INFO   ] thread player 0 starting.
+[21:03:44.376] [INFO   ] thread player 1 starting.
+[21:03:44.482] [SEVERE ] placing card 12 in slot 1
+[21:03:44.583] [SEVERE ] placing card 45 in slot 3
+[21:03:44.685] [SEVERE ] placing card 6 in slot 0
+[21:03:44.787] [SEVERE ] placing card 10 in slot 4
+[21:03:44.889] [SEVERE ] placing card 52 in slot 9
+[21:03:44.990] [SEVERE ] placing card 74 in slot 5
+[21:03:45.091] [SEVERE ] placing card 60 in slot 2
+[21:03:45.194] [SEVERE ] placing card 61 in slot 11
+[21:03:45.297] [SEVERE ] placing card 5 in slot 7
+[21:03:45.399] [SEVERE ] placing card 29 in slot 6
+[21:03:45.500] [SEVERE ] placing card 2 in slot 10
+[21:03:45.603] [SEVERE ] placing card 62 in slot 8
+[21:03:45.604] [SEVERE ] updating countdown to 60000
+[21:03:46.607] [SEVERE ] updating countdown to 58999
+[21:03:47.189] [SEVERE ] key 81 was pressed by player 1
+[21:03:47.321] [SEVERE ] key 87 was pressed by player 1
+[21:03:47.610] [SEVERE ] updating countdown to 57996
+[21:03:47.848] [SEVERE ] key 69 was pressed by player 1
+[21:03:48.612] [SEVERE ] updating countdown to 56994
+[21:03:48.789] [SEVERE ] key 81 was pressed by player 1
+[21:03:49.615] [SEVERE ] updating countdown to 55991
+[21:03:50.617] [SEVERE ] updating countdown to 54989
+[21:03:51.619] [SEVERE ] updating countdown to 53987
+[21:03:52.639] [SEVERE ] updating countdown to 52967
+[21:03:53.642] [SEVERE ] updating countdown to 51964
+[21:03:54.644] [SEVERE ] updating countdown to 50962
+[21:03:55.645] [SEVERE ] updating countdown to 49961
+[21:03:56.648] [SEVERE ] updating countdown to 48958
+[21:03:57.650] [SEVERE ] updating countdown to 47957
+[21:03:58.651] [SEVERE ] updating countdown to 46955
+[21:03:59.653] [SEVERE ] updating countdown to 45954
+[21:04:00.654] [SEVERE ] updating countdown to 44952
+[21:04:01.656] [SEVERE ] updating countdown to 43950

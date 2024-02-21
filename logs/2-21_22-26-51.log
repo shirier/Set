@@ -1,0 +1,40 @@
+[22:26:51.576] [INFO   ] thread main starting.
+[22:26:51.595] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[22:26:51.605] [SEVERE ] configuration file was loaded from resources directory.
+[22:26:53.151] [INFO   ] thread dealer starting.
+[22:26:53.152] [INFO   ] thread dealer starting.
+[22:26:53.153] [INFO   ] thread player 0 starting.
+[22:26:53.155] [INFO   ] thread player 1 starting.
+[22:26:53.155] [INFO   ] thread player 0 starting.
+[22:26:53.156] [INFO   ] thread player 1 starting.
+[22:26:53.268] [SEVERE ] placing card 77 in slot 6
+[22:26:53.370] [SEVERE ] placing card 57 in slot 8
+[22:26:53.472] [SEVERE ] placing card 15 in slot 11
+[22:26:53.574] [SEVERE ] placing card 78 in slot 0
+[22:26:53.676] [SEVERE ] placing card 61 in slot 4
+[22:26:53.781] [SEVERE ] placing card 45 in slot 5
+[22:26:53.886] [SEVERE ] placing card 6 in slot 7
+[22:26:53.988] [SEVERE ] placing card 3 in slot 2
+[22:26:54.090] [SEVERE ] placing card 31 in slot 3
+[22:26:54.192] [SEVERE ] placing card 14 in slot 1
+[22:26:54.293] [SEVERE ] placing card 41 in slot 9
+[22:26:54.395] [SEVERE ] placing card 19 in slot 10
+[22:26:54.396] [SEVERE ] updating countdown to 60000
+[22:26:55.400] [SEVERE ] updating countdown to 58998
+[22:26:56.403] [SEVERE ] updating countdown to 57995
+[22:26:56.843] [SEVERE ] key 81 was pressed by player 1
+[22:26:56.843] [SEVERE ] player 1 placing token on slot 0
+[22:26:57.097] [SEVERE ] key 87 was pressed by player 1
+[22:26:57.098] [SEVERE ] player 1 placing token on slot 1
+[22:26:57.383] [SEVERE ] key 69 was pressed by player 1
+[22:26:57.384] [SEVERE ] player 1 placing token on slot 2
+[22:26:57.405] [SEVERE ] updating countdown to 56993
+[22:26:58.271] [SEVERE ] key 81 was pressed by player 1
+[22:26:58.412] [SEVERE ] updating countdown to 55986
+[22:26:58.414] [SEVERE ] key 87 was pressed by player 1
+[22:26:58.463] [SEVERE ] key 69 was pressed by player 1
+[22:26:59.415] [SEVERE ] updating countdown to 54983
+[22:26:59.885] [SEVERE ] key 81 was pressed by player 1
+[22:27:00.417] [SEVERE ] updating countdown to 53982
+[22:27:01.429] [SEVERE ] updating countdown to 52969
+[22:27:02.440] [SEVERE ] updating countdown to 51958
