@@ -1,3 +1,4 @@
+
 package bguspl.set.ex;
 
 import bguspl.set.Env;
@@ -65,8 +66,8 @@ public class Dealer implements Runnable {
         while (!shouldFinish()) 
         {
             placeCardsOnTable();
-            timerLoop();
             updateTimerDisplay(true);
+            timerLoop();
             removeAllCardsFromTable();
         }
         announceWinners();
@@ -77,6 +78,7 @@ public class Dealer implements Runnable {
      * The inner loop of the dealer thread that runs as long as the countdown did not time out.
      */
     private void timerLoop() {
+        reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
         while (!terminate && System.currentTimeMillis() < reshuffleTime) 
         {
             sleepUntilWokenOrTimeout();
@@ -152,10 +154,10 @@ public class Dealer implements Runnable {
     /**
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
-    private void sleepUntilWokenOrTimeout() 
+    private synchronized void sleepUntilWokenOrTimeout() 
     {
-        synchronized (this) 
-        {
+        //synchronized (this) 
+        //{
             try 
             {
                 // Calculate the remaining time until reshuffle
@@ -170,7 +172,7 @@ public class Dealer implements Runnable {
                 
             } 
             catch (InterruptedException ignored) {}
-        }
+        //}
         // TODO implement
     }
 
@@ -192,35 +194,36 @@ public class Dealer implements Runnable {
             if(counter == 3) // maybe not needed
             {
                 ans = env.util.testSet(chosen);
-            }
-            if(ans)
-            {
-                player.point();
-                env.ui.setScore(player.id, player.score());
-                try{
-                playersWithCardsToRemove.put(player.id);
-                }
-                catch(InterruptedException e)
+                if(ans)
                 {
-                    e.printStackTrace();
+                    player.point();
+                    env.ui.setScore(player.id, player.score());
+                    try{
+                    playersWithCardsToRemove.put(player.id);
+                    }
+                    catch(InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    removeCardsFromTable();
                 }
-                removeCardsFromTable();
+                else
+                {
+                    player.penalty();
+                }
+                synchronized(player)
+                {
+                    player.notifyAll();
+                }
             }
-            else
-            {
-                player.penalty();
-            }
-            synchronized(player)
-            {
-                player.notifyAll();
-            }
+         
         }    
     }
 
     public void checkWhenNotified(int id)
     {
         synchronized (this) 
-        {
+        { 
             try 
             {
                 notifyAll();
@@ -241,8 +244,12 @@ public class Dealer implements Runnable {
         {
             reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
         }
-        env.ui.setCountdown(reshuffleTime, reshuffleTime-System.currentTimeMillis() < env.config.turnTimeoutWarningMillis);
+        env.ui.setCountdown(reshuffleTime - System.currentTimeMillis() , reshuffleTime - System.currentTimeMillis() < env.config.turnTimeoutWarningMillis);
+    
     }
+
+    
+    
 
     /**
      * Returns all the cards from the table to the deck.
@@ -292,4 +299,3 @@ public class Dealer implements Runnable {
         env.ui.announceWinner(winners);
     }
 }
-

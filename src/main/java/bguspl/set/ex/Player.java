@@ -69,6 +69,7 @@ public class Player implements Runnable {
     private ArrayBlockingQueue<Integer> keyPresses;
     //private int counter=0;
     private boolean frosen = false;
+    private boolean pointFreze=false;
     //final private Object LockQueue = new Object();
 
 
@@ -82,12 +83,14 @@ public class Player implements Runnable {
      * @param human  - true iff the player is a human player (i.e. input is provided manually, via the keyboard).
      */
     public Player(Env env, Dealer dealer, Table table, int id, boolean human) {
+        playerThread = Thread.currentThread();
         this.env = env;
         this.dealer = dealer;
         this.table = table;
         this.id = id;
         this.human = human;
         terminate=false;
+        this.keyPresses = new ArrayBlockingQueue<>(env.config.players*3);
     }
 
     /**
@@ -104,15 +107,41 @@ public class Player implements Runnable {
 
         while (!terminate) 
         {   
+           /*while(keyPresses.isEmpty())
+            {
+                try 
+                {
+                    Thread.currentThread().wait();
+                } 
+                catch (InterruptedException ignored) {}
+            } */ 
             if(frosen)
             {
-                synchronized (this) 
-                {
-                    try 
+                 try 
+                 {
+                    for(int i=3; i>0; i--)
                     {
-                        wait();
+                        
+                        env.ui.setFreeze(id, env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
+                        //player thread
+                        Thread.sleep(env.config.penaltyFreezeMillis);
+                    }
+                    env.ui.setFreeze(id, 0);
+                    frosen = false;
                     } 
                     catch (InterruptedException ignored) {}
+                
+            }
+            if(pointFreze)
+            {
+                
+                try
+                {
+                    Thread.sleep(env.config.pointFreezeMillis);
+                }
+                catch(InterruptedException e)
+                {
+                    pointFreze=false;
                 }
             }
             act();            
@@ -121,6 +150,7 @@ public class Player implements Runnable {
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     }
 
+    
     /**
      * Creates an additional thread for an AI (computer) player. The main loop of this thread repeatedly generates
      * key presses. If the queue of key presses is full, the thread waits until it is not full.
@@ -147,6 +177,7 @@ public class Player implements Runnable {
     public void terminate() {
         terminate=true;
         // TODO implement
+        
     }
 
     /**
@@ -181,48 +212,23 @@ public class Player implements Runnable {
      * @post - the player's score is increased by 1.
      * @post - the player's score is updated in the ui.
      */
-    public void point() {
+    public void point() 
+    {
         // TODO implement
 
-    //    int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        //    int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         env.ui.setScore(id, ++score);
-        synchronized(this)
-        { try
-            {
-                playerThread.sleep(env.config.pointFreezeMillis);
-            }
-            catch(InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-        }
-}
+        pointFreze=true;
+    }
 
     /**
      * Penalize a player and perform other related actions.
      */
-    public void penalty() 
+     public void penalty() 
     {
-        // TODO implement
-        try
-        {
-            synchronized(this)
-            {
-                frosen = true;
-                for(int i=3; i>0; i--)
-                {
-                    env.ui.setFreeze(id, env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
-                    playerThread.sleep(env.config.penaltyFreezeMillis - i*env.config.penaltyFreezeMillis/3); //replace, magic number
-                }
-                env.ui.setFreeze(id, 0);
-                frosen = false;
-            }
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+        frosen = true;
     }
+    
 
     public int score() {
         return score;
@@ -238,8 +244,10 @@ public class Player implements Runnable {
 
         }*/
     }
+    
     private void act()
     {
+        
         synchronized (keyPresses) {
             /*while(keyPresses.isEmpty())
             {
@@ -263,7 +271,9 @@ public class Player implements Runnable {
                             {
                                 frosen = true;
                                 dealer.checkWhenNotified(this.id);
-                                wait();
+                                try {
+                                    wait();
+                                } catch (InterruptedException e) {}
                                 frosen = false;
                             }
                         }
@@ -271,10 +281,10 @@ public class Player implements Runnable {
                 }
                 catch(InterruptedException e)
                 {
-                    e.printStackTrace();
                 }
             }
         }
     }
-
+    
+    
 }
