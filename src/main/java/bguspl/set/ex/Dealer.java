@@ -75,6 +75,7 @@ public class Dealer implements Runnable {
         }
         announceWinners();
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
+        terminate();
     }
 
     /**
@@ -87,7 +88,7 @@ public class Dealer implements Runnable {
         {
             sleepUntilWokenOrTimeout();
             updateTimerDisplay(false);
-            while(!playersWithCardsToRemove.isEmpty())
+            while(!terminate && !playersWithCardsToRemove.isEmpty())
             {
                 try
                 {
@@ -107,14 +108,11 @@ public class Dealer implements Runnable {
      */
     public void terminate() {
         // TODO implement
-        if(deck.size()==0 || table.countCards()==0)
+        for(Player player:players)
         {
-            for(Player player:players)
-            {
-                player.terminate();
-            }
-            terminate=true;
+            player.terminate();
         }
+        terminate=true;
     }
 
     /**
@@ -123,7 +121,8 @@ public class Dealer implements Runnable {
      * @return true iff the game should be finished.
      */
     private boolean shouldFinish() {
-        return terminate || env.util.findSets(deck, 1).size() == 0;
+        
+        return terminate || env.util.findSets(deck, 1).size() == 0 ;
     }
 
     /**
@@ -131,8 +130,9 @@ public class Dealer implements Runnable {
      */
     private void removeCardsFromTable() 
     {
+        
         // TODO implement
-            while (!cardstoRemove.isEmpty()) {
+            while (!terminate && !cardstoRemove.isEmpty() ) {
                 try
                 {
                 table.removeCard(table.cardToSlot[cardstoRemove.take()]);
@@ -150,7 +150,7 @@ public class Dealer implements Runnable {
         Collections.shuffle(deck);
         List<Integer> places = IntStream.range(0, env.config.tableSize).boxed().collect(Collectors.toList());
         Collections.shuffle(places);
-        for(int i=0;i<places.size();i++)
+        for(int i=0;!terminate && i<places.size();i++)
         {
             if(deck.size()>0 && table.slotToCard[places.get(i)] == null)
             {
@@ -193,7 +193,7 @@ public class Dealer implements Runnable {
         System.out.println("joined check");
         int[] chosen = new int[3];
         int counter = 0;
-        for(int i = 0; i < env.config.tableSize; i++)
+        for(int i = 0;!terminate && i < env.config.tableSize ; i++)
         {
             if(table.playerTokens[id][i] == true)
             {
@@ -252,7 +252,7 @@ public class Dealer implements Runnable {
     private void removeAllCardsFromTable() 
     {
         // TODO implement
-        for(int i=0;i<env.config.tableSize;i++)
+        for(int i=0;!terminate && i<env.config.tableSize;i++)
         {
             if(table.slotToCard[i]!=null)
             {

@@ -111,9 +111,8 @@ public class Player implements Runnable {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
         if (!human) createArtificialIntelligence();
 
-        while (!terminate) 
-        {   
-            while(keyPresses.isEmpty())
+
+            while(!terminate && keyPresses.isEmpty())
             {
                 try 
                 {
@@ -126,7 +125,6 @@ public class Player implements Runnable {
             }  
             
             act();            
-        }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     }
@@ -235,7 +233,7 @@ public class Player implements Runnable {
                                     {
                                         long freezTime = env.config.penaltyFreezeMillis;
                                         env.ui.setFreeze(id, freezTime ); //replace, magic number
-                                        while(freezTime>0)
+                                        while(!terminate && freezTime>0)
                                         {
 
                                             env.ui.setFreeze(id, freezTime );
@@ -257,7 +255,7 @@ public class Player implements Runnable {
                                     {
                                         long freezTime = env.config.pointFreezeMillis;
                                         env.ui.setFreeze(id, freezTime ); //replace, magic number
-                                        while(freezTime>0)
+                                        while(!terminate && freezTime>0)
                                         {
 
                                             env.ui.setFreeze(id, freezTime );

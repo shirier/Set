@@ -1,0 +1,15 @@
+[00:01:30.340] [INFO   ] thread main starting.
+[00:01:30.359] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[00:01:30.368] [SEVERE ] configuration file was loaded from resources directory.
+[00:01:31.611] [INFO   ] thread dealer starting.
+[00:01:31.612] [INFO   ] thread dealer starting.
+[00:01:31.613] [INFO   ] thread player 0 starting.
+[00:01:31.614] [INFO   ] thread player 1 starting.
+[00:01:31.614] [INFO   ] thread player 0 starting.
+[00:01:31.615] [INFO   ] thread player 1 starting.
+[00:01:31.622] [SEVERE ] announcing winner(s): player 1, player 2
+[00:01:31.629] [INFO   ] thread dealer terminated.
+[00:01:31.631] [INFO   ] thread dealer terminated.
+[00:01:35.006] [SEVERE ] exit button pressed
+[00:01:36.632] [SEVERE ] thanks for playing... it was fun!
+[00:01:36.633] [INFO   ] thread main terminated.
