@@ -111,20 +111,22 @@ public class Player implements Runnable {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
         if (!human) createArtificialIntelligence();
 
-
-            while(!terminate && keyPresses.isEmpty())
+        while(!terminate)
             {
-                try 
+                while(keyPresses.isEmpty())
                 {
-                    synchronized(lockPress)
+                    try 
                     {
-                        lockPress.wait();
-                    }
-                } 
-                catch (InterruptedException ignored) {}
-            }  
-            
-            act();            
+                        synchronized(lockPress)
+                        {
+                            lockPress.wait();
+                        }
+                    } 
+                    catch (InterruptedException ignored) {}
+                }  
+                
+                act();  
+            }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     }
